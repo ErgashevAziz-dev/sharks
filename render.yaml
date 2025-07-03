@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: my-django-app
+    name: sharks
     env: python
     plan: free
     region: frankfurt
@@ -9,15 +9,13 @@ services:
       python manage.py makemigrations
       python manage.py migrate
       python manage.py collectstatic --noinput
-    startCommand: gunicorn config.wsgi:application
+    startCommand: gunicorn sharks.wsgi:application
     envVars:
       - key: DJANGO_SETTINGS_MODULE
-        value: mysite.settings
-      - key: PYTHON_VERSION
-        value: 3.11
+        value: sharks.settings
       - key: SECRET_KEY
         generateValue: true
       - key: DEBUG
         value: "False"
       - key: ALLOWED_HOSTS
-        value: "sharks-3.onrender.com/"
+        value: "*.onrender.com"
