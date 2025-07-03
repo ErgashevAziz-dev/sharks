@@ -1,14 +1,23 @@
 services:
   - type: web
-    name: sharks-3
+    name: my-django-app
     env: python
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn config.wsgi:application"
+    plan: free
+    region: frankfurt
+    buildCommand: |
+      pip install -r requirements.txt
+      python manage.py makemigrations
+      python manage.py migrate
+      python manage.py collectstatic --noinput
+    startCommand: gunicorn config.wsgi:application
     envVars:
       - key: DJANGO_SETTINGS_MODULE
-        value: config.settings
-    autoDeploy: true
-    buildFilter:
-      paths:
-        - ./*
-    postDeployCommand: "python manage.py migrate"
+        value: mysite.settings
+      - key: PYTHON_VERSION
+        value: 3.11
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: "sharks-3.onrender.com/"
