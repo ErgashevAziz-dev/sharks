@@ -1,1 +1,1 @@
-web: gunicorn sharks.wsgi
+web: gunicorn config.wsgi
