@@ -58,9 +58,8 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database configuration
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL'),
-        conn_max_age=600,
-        ssl_require=False
+        default='sqlite:///db.sqlite3',  # fallback database
+        conn_max_age=600
     )
 }
 
